@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "41145687661",
+    "project_id": "marketkonnect-e67f4",
+    "storage_bucket": "marketkonnect-e67f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41145687661:android:b6f940ecf5bf8e70356964",
+        "android_client_info": {
+          "package_name": "com.market_connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41145687661-e0kqoqdg1s7iaqb8kuoc1caon55nnc5d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.market_connect",
+            "certificate_hash": "8ea05ccb0c49e94d489f497c20b57a04b7125555"
+          }
+        },
+        {
+          "client_id": "41145687661-uqdo1liu672lfkdoiob4uub0a5uq0bgt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz-R20hEX_6Jk-Nos7mmmWwZkOsJkdGhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41145687661-uqdo1liu672lfkdoiob4uub0a5uq0bgt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
