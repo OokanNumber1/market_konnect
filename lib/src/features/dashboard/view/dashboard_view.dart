@@ -1,46 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:market_connect/src/features/authentication/model/auth_state.dart';
-import 'package:market_connect/src/features/authentication/repository/auth_repo.dart';
-import 'package:market_connect/src/features/authentication/view_model/auth_vm.dart';
-import 'package:market_connect/src/features/authentication/views/signin_view.dart';
+import 'package:market_connect/src/features/dashboard/widget/navbar_item.dart';
+import 'package:market_connect/src/features/dashboard/home/view/home.dart';
+import 'package:market_connect/src/features/dashboard/profile/view/profile.dart';
+import 'package:market_connect/src/features/dashboard/reach_out/view/reach_out.dart';
 
-class DashboardView extends ConsumerWidget {
+class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final signedIn = ref.read(currentUser);
-    final authVM = ref.read(authVmProvider.notifier);
+  State<DashboardView> createState() => _DashboardViewState();
+}
 
-    ref.listen(authVmProvider, (previous, state) {
-      if (state.authViewState == ViewState.success) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const SignInView(),
-            ),
-            (route) => false);
-      }
-    });
+class _DashboardViewState extends State<DashboardView> {
+  int indexOfNavBar = 0;
+
+  void setIndexOfNavbar(int value) => setState(() {
+        indexOfNavBar = value;
+      });
+  @override
+  Widget build(BuildContext context) {
+    const pages = [
+      {"page": HomeView(), "icon": Icons.home, "label": "Home"},
+      {"page": ReachOutView(), "icon": Icons.message, "label": "Reach Out"},
+      {"page": ProfileView(), "icon": Icons.person, "label": "Profile"},
+    ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "${signedIn!.uid}",
-          style: const TextStyle(fontSize: 12),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => authVM.signOut(),
-            child: const Text(
-              "Sign out",
-              style: TextStyle(color: Colors.white),
+      body: pages[indexOfNavBar]["page"] as Widget,
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(
+            pages.length,
+            (index) => GestureDetector(
+              onTap: () => setIndexOfNavbar(index),
+              child: NavbarItem(
+                color: indexOfNavBar == index
+                    ? Colors.brown[300]!
+                    : Colors.brown[100]!,
+                label: pages[index]["label"] as String,
+                icon: pages[index]["icon"] as IconData,
+              ),
             ),
-          )
-        ],
+          ),
+        ),
       ),
-      body: Column(children: const []),
     );
   }
 }

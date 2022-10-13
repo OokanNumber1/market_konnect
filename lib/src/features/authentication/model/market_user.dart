@@ -8,11 +8,15 @@ class MarketUser {
     required this.uid,
     required this.marketName,
     required this.fullName,
+    required this.followers,
+    required this.following,
   });
   final String email;
   final String uid;
   final String marketName;
   final String fullName;
+  final int followers;
+  final int following;
 
   factory MarketUser.empty() {
     return const MarketUser(
@@ -20,6 +24,8 @@ class MarketUser {
       uid: "",
       marketName: "",
       fullName: "",
+      followers: 0,
+      following: 0,
     );
   }
 
@@ -29,6 +35,8 @@ class MarketUser {
       'uid': uid,
       'marketName': marketName,
       'fullName': fullName,
+      'followers': followers,
+      'following': following
     };
   }
 
@@ -38,6 +46,8 @@ class MarketUser {
       uid: map['uid'] ?? '',
       marketName: map['marketName'] ?? '',
       fullName: map['fullName'] ?? '',
+      followers: map['followers'] ?? 0,
+      following: map['following'] ?? 0,
     );
   }
 

@@ -34,7 +34,8 @@ class SignUpView extends HookConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-                "Kindly check email provided to verify your email before signing in."),
+              "Kindly check email provided to verify your email before signing in.",
+            ),
           ),
         );
         Navigator.push(
@@ -51,7 +52,6 @@ class SignUpView extends HookConsumerWidget {
       }
     });
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),

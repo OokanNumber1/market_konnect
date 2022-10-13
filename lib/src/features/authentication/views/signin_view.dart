@@ -61,7 +61,7 @@ class SignInView extends HookConsumerWidget {
                   controller: passwordController,
                   labelText: "Password",
                   validator: (input) => Validator.characterLength(input: input),
-                  prefixIcon: const Icon(Icons.email),
+                  prefixIcon: const Icon(Icons.password),
                   obscureText: isPasswordVisible.value,
                   suffixIcon: IconButton(
                     onPressed: () =>
@@ -110,27 +110,28 @@ class SignInView extends HookConsumerWidget {
                 ),
                 Spacing.vertical(height: 24),
                 ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(double.maxFinite, 48),
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        side: const BorderSide(color: Colors.brown),
-                      ),
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: const Size(double.maxFinite, 48),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: const BorderSide(color: Colors.brown),
                     ),
-                    onPressed: () =>
-                        ref.read(authVmProvider.notifier).googleSignIn(),
-                    child: ref.watch(authVmProvider).authViewState ==
-                            ViewState.loading
-                        ? const LinearProgressIndicator(color: Colors.brown)
-                        : const Text(
-                            "Continue with Google Account",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.brown,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ))
+                  ),
+                  onPressed: () =>
+                      ref.read(authVmProvider.notifier).googleSignIn(),
+                  child: ref.watch(authVmProvider).authViewState ==
+                          ViewState.loading
+                      ? const LinearProgressIndicator(color: Colors.brown)
+                      : const Text(
+                          "Continue with Google Account",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.brown,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                )
               ],
             ),
           ),
