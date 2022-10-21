@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore: ^3.5.1
   hooks_riverpod: ^2.0.2
   google_sign_in: ^5.4.2
+  firebase_storage: ^10.3.11
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

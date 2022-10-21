@@ -14,6 +14,9 @@ class MarketKonnetTheme {
         inputDecorationTheme: InputDecorationTheme(
           fillColor: Colors.brown[50],
         ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: MarketKonnetColor.primary[300],
+        ),
         textTheme: ThemeData.light().textTheme,
         buttonTheme: ButtonThemeData(
           shape: RoundedRectangleBorder(
@@ -25,6 +28,9 @@ class MarketKonnetTheme {
         primaryColor: MarketKonnetColor.primary,
         brightness: Brightness.dark,
         primarySwatch: MarketKonnetColor.primary,
+        appBarTheme: AppBarTheme(
+          backgroundColor: MarketKonnetColor.primary[300],
+        ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Colors.brown[200],
         ),
@@ -32,7 +38,7 @@ class MarketKonnetTheme {
           fillColor: Colors.brown[200],
           labelStyle: const TextStyle(color: Colors.white),
         ),
-        textTheme: ThemeData.dark().textTheme.copyWith(),
+        textTheme: ThemeData.dark().textTheme,
         buttonTheme: ButtonThemeData(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),

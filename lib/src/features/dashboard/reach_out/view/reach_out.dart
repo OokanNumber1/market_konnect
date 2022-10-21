@@ -11,7 +11,7 @@ class ReachOutView extends StatelessWidget {
       padding: const EdgeInsets.all(Insets.large),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text("R E A C H  O U T    V I E W")],
+        children:const [Text("R E A C H  O U T    V I E W")],
       ),
     ),);
   }

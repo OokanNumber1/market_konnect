@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:market_connect/src/features/authentication/model/auth_state.dart';
 import 'package:market_connect/src/features/authentication/model/signup_dto.dart';
 import 'package:market_connect/src/features/authentication/view_model/auth_vm.dart';
 import 'package:market_connect/src/features/authentication/views/signin_view.dart';
 import 'package:market_connect/src/features/dashboard/view/dashboard_view.dart';
+import 'package:market_connect/src/utilities/enums/enums.dart';
 import 'package:market_connect/src/utilities/validator/validator.dart';
 import 'package:market_connect/src/utilities/widgets/spacing.dart';
 import 'package:market_connect/src/utilities/widgets/text_input_field.dart';
@@ -18,8 +18,8 @@ class SignUpView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formKey = GlobalKey<FormState>();
 
-    final isPasswordVisible = useState(false);
-    final isConfirmPasswordVisible = useState(false);
+    final isPasswordVisible = useState(true);
+    final isConfirmPasswordVisible = useState(true);
     final withGoogle = useState(false);
 
     final authVM = ref.watch(authVmProvider);
@@ -38,7 +38,7 @@ class SignUpView extends HookConsumerWidget {
             ),
           ),
         );
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) =>
@@ -169,7 +169,7 @@ class SignUpView extends HookConsumerWidget {
                   ],
                 ),
                 Spacing.vertical(height: 24),
-                ElevatedButton(
+                /*ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(double.maxFinite, 48),
                     backgroundColor: Colors.white,
@@ -192,7 +192,7 @@ class SignUpView extends HookConsumerWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                )
+                )*/
               ],
             ),
           ),

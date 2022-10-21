@@ -17,8 +17,9 @@ class AuthRepository {
   final GoogleSignIn googleAuth;
   final FirebaseFirestore firestore;
 
-  Stream<User?> get authStateChanges => firebaseAuth.idTokenChanges();
   User? get currentUser => firebaseAuth.currentUser;
+  Stream<User?> get userStream => firebaseAuth.authStateChanges();
+
   //MarketUser? get currentMarketUser => MarketUser.fromMap(firestore.collection(FirestoreCollection.marketUsers).get(""));
 
   Future<void> googleSignIn() async {
@@ -33,7 +34,7 @@ class AuthRepository {
         final userCred = await firebaseAuth.signInWithCredential(
           googleAuthCredential,
         );
-         
+
         // return MarketUser(
         //   email: userCred.user!.email!,
         //   uid: userCred.user!.uid,
@@ -43,7 +44,7 @@ class AuthRepository {
         throw AuthException(errorMessage: err.message!);
       }
     }
-    return null;
+    return ;
   }
 
   //Future<MarketUser> emailPasswordSignIn(
@@ -58,8 +59,11 @@ class AuthRepository {
       );
 
       if (signedUser.user != null && !(signedUser.user!.emailVerified)) {
-        throw const AuthException(errorMessage: "Kindly verify the verification link sent to the provided mail");
+        throw const AuthException(
+            errorMessage:
+                "Kindly verify the verification link sent to the provided mail");
       }
+      await firebaseAuth.currentUser!.reload();
       //return MarketUser(email: email, uid: userCred.user!.uid);
     } on FirebaseAuthException catch (e) {
       throw AuthException(errorMessage: e.message!);
@@ -72,14 +76,14 @@ class AuthRepository {
       //final user =
       final signedUser = await firebaseAuth.createUserWithEmailAndPassword(
           email: signUpDto.email, password: signUpDto.password);
-      
+
       await saveUser(signUpDto);
       await signedUser.user!.sendEmailVerification();
 
       //return MarketUser(email: signUpDto.email, uid: user.user!.uid,marketName: signUpDto.marketName);
     } on FirebaseAuthException catch (e) {
       throw AuthException(errorMessage: e.message!);
-    } on FirebaseException catch (e){
+    } on FirebaseException catch (e) {
       throw AuthException(errorMessage: e.message!);
     }
   }
@@ -90,21 +94,20 @@ class AuthRepository {
   }
 
   Future<void> saveUser(SignupDTO signupDto) async {
+    final marketUser = MarketUser(
+      email: signupDto.email,
+      uid: currentUser!.uid,
+      marketName: signupDto.marketName,
+      fullName: signupDto.fullName,
+      about: "",
+      photoUrl: "",
+      followers: [],
+      following: [],
+    );
     await firestore
         .collection(FirestoreCollection.marketUsers)
         .doc(currentUser!.uid)
-        .set(signupDto.toMap());
-  }
-
-//DocumentSnapshot<Map<String, dynamic>>
-  Future<MarketUser> getUser(String uid) async {
-    final docSnap = await firestore
-        .collection(FirestoreCollection.marketUsers)
-        .doc(uid)
-        .get();
-    //final docToMap = docSnap.data();
-    return MarketUser.fromDocumentSnapshot(docSnap);
-    //return MarketUser.fromMap(docToMap ?? {});
+        .set(marketUser.toMap());
   }
 }
 
@@ -116,8 +119,7 @@ final authRepoProvider = Provider((ref) {
   );
 });
 
-final authStateProvider = StreamProvider<User?>((ref) {
-  return ref.watch(authRepoProvider).authStateChanges;
+final currentUser = Provider((ref) => ref.read(authRepoProvider).currentUser);
+final authChangeProvider = StreamProvider((ref) {
+  return ref.read(authRepoProvider).userStream;
 });
-
-final currentUser = Provider((ref)=>ref.read(authRepoProvider).currentUser);

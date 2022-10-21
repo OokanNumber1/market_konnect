@@ -1,11 +1,9 @@
-import 'package:market_connect/src/features/authentication/model/market_user.dart';
-
-enum ViewState { success, failure, loading, initial }
+import 'package:market_connect/src/utilities/enums/enums.dart';
 
 class AuthState {
   final ViewState authViewState;
   final String? errorMessage;
- // final MarketUser? signedUser;
+  // final MarketUser? signedUser;
   const AuthState({
     this.authViewState = ViewState.initial,
     this.errorMessage,
@@ -15,12 +13,12 @@ class AuthState {
   AuthState copyWith({
     ViewState? authViewState,
     String? errorMessage,
-   // MarketUser? signedUser,
+    // MarketUser? signedUser,
   }) {
     return AuthState(
       authViewState: authViewState ?? this.authViewState,
       errorMessage: errorMessage ?? this.errorMessage,
-     // signedUser: signedUser ?? this.signedUser,
+      // signedUser: signedUser ?? this.signedUser,
     );
   }
 }

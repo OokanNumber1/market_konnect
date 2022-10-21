@@ -14,19 +14,16 @@ class MarketKonnet extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUser = ref.watch(authRepoProvider).currentUser;
+    final currentUser = ref.watch(authChangeProvider).value;
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Market Konnect',
-        // theme: curr,
-        theme: MarketKonnetTheme.lightTheme,
-        darkTheme: MarketKonnetTheme.darkTheme,
-        home:
-            //currentUser?.emailVerified == true
-            //?
-            const DashboardView()
-        // :
-        //const SignInView(),
-        );
+      debugShowCheckedModeBanner: false,
+      title: 'Market Konnect',
+      // theme: curr,
+      theme: MarketKonnetTheme.lightTheme,
+      darkTheme: MarketKonnetTheme.darkTheme,
+      home: currentUser?.emailVerified == true
+          ? const DashboardView()
+          : const SignInView(),
+    );
   }
 }

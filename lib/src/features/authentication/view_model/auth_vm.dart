@@ -1,8 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:market_connect/src/features/authentication/model/auth_state.dart';
+import 'package:market_connect/src/features/authentication/state/auth_state.dart';
 import 'package:market_connect/src/features/authentication/model/market_user.dart';
 import 'package:market_connect/src/features/authentication/model/signup_dto.dart';
 import 'package:market_connect/src/features/authentication/repository/auth_repo.dart';
+import 'package:market_connect/src/utilities/enums/enums.dart';
 import 'package:market_connect/src/utilities/exception/exception.dart';
 
 class AuthViewModel extends StateNotifier<AuthState> {
