@@ -68,7 +68,7 @@ class _ProfileViewState extends ConsumerState<PrimaryProfileView> {
                   label: "Following",
                   value: user.following.length,
                 ),
-                ProfileAvatar(fullName: user.fullName),
+                ProfileAvatar(user: user),
                 FollowDisplay(
                   user: user,
                   label: "Followers",

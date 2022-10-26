@@ -1,11 +1,19 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:market_connect/src/features/authentication/model/market_user.dart';
 import 'package:market_connect/src/utilities/constants/string_consts.dart';
 
 class ProfileRepository {
-  const ProfileRepository({required this.firestore});
+  const ProfileRepository({
+    required this.firestore,
+    required this.fStorage,
+  });
   final FirebaseFirestore firestore;
+  final FirebaseStorage fStorage;
   Future<MarketUser> getUser(String uid) async {
     final docMap = (await firestore
             .collection(FirestoreCollection.marketUsers)
@@ -16,65 +24,52 @@ class ProfileRepository {
     return MarketUser.fromMap(docMap!);
   }
 
-  // bool isFollowing (String secondaryAccount) async {
-  //   final primaryAccount = 
-  // }
+  void uploadProfileImage(String userId) async {
+    final imagePicker = ImagePicker();
+    final pickedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      final imageRef = fStorage.ref().child("profileImages").child("$userId/DP_${DateTime.now().toIso8601String()}");
+      await imageRef.putFile(File(pickedImage.path));
+      final uploadLink = await imageRef.getDownloadURL();
+      await firestore.collection(FirestoreCollection.marketUsers).doc(userId).update({"photoUrl": uploadLink});
+    }
+    return;
+  }
 
   void follow(String primaryUid, String secondaryUid) async {
-    // primaryUid is the loggedIn User (that follows)
-    if (primaryUid == secondaryUid ) {
-      return ;
+    if (primaryUid == secondaryUid) {
+      return;
     }
     final follower = await getUser(primaryUid);
-    //final secAccount = await getUser(secondaryUid);
 
     if (follower.following.contains(secondaryUid)) {
-      // follower.following.remove(secAccount);
-      // secAccount.followers.remove(follower);
       await firestore
           .collection(FirestoreCollection.marketUsers)
           .doc(primaryUid)
           .update({
         'following': FieldValue.arrayRemove([secondaryUid])
-        //'following': FieldValue.arrayRemove([secAccount.toMap() as dynamic])
       });
       await firestore
           .collection(FirestoreCollection.marketUsers)
           .doc(secondaryUid)
           .update({
         'followers': FieldValue.arrayRemove([primaryUid])
-        // 'followers': FieldValue.arrayRemove([follower.toMap() as dynamic])
       });
     } else {
-      // follower.following.add(secAccount);
-      // secAccount.followers.add(follower);
       await firestore
           .collection(FirestoreCollection.marketUsers)
           .doc(secondaryUid)
           .update({
         'followers': FieldValue.arrayUnion([primaryUid])
-        // 'followers': FieldValue.arrayUnion([follower.toMap() as dynamic])
       });
-       await firestore
+      await firestore
           .collection(FirestoreCollection.marketUsers)
           .doc(primaryUid)
           .update({
-            'following': FieldValue.arrayUnion([secondaryUid])
-        //'following': FieldValue.arrayUnion([secAccount.toMap() as dynamic])
+        'following': FieldValue.arrayUnion([secondaryUid])
       });
     }
-    // final newFollowing = follower.following;
-
-    // final newFollower = secAccount.followers;
-
-    // await firestore
-    //     .collection(FirestoreCollection.marketUsers)
-    //     .doc(primaryUid)
-    //     .update({'following': newFollowing.map((user) => user.toMap()).toList()});
-    // await firestore
-    //     .collection(FirestoreCollection.marketUsers)
-    //     .doc(secondaryUid)
-    //     .update({'followers': newFollower.map((user) => user.toMap()).toList()});
   }
 
   Future<List<MarketUser>> getAllUsers() async {
@@ -88,5 +83,8 @@ class ProfileRepository {
 }
 
 final profileRepoProvider = Provider((ref) {
-  return ProfileRepository(firestore: FirebaseFirestore.instance);
+  return ProfileRepository(
+    firestore: FirebaseFirestore.instance,
+    fStorage: FirebaseStorage.instance,
+  );
 });

@@ -43,6 +43,8 @@ dependencies:
   google_sign_in: ^5.4.2
   firebase_storage: ^10.3.11
   hive_flutter: ^1.1.0
+  path: ^1.8.2
+  image_picker: ^0.8.6
 
 dev_dependencies:
   flutter_test:

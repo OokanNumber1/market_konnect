@@ -75,7 +75,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 Spacing.vertical(height: 32),
                 Container(
                   height: screenSize.height * 0.32,
-                  color: Colors.amber,
+                  color: MarketKonnetColor.primary[100],
                 )
               ],
             ),

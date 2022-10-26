@@ -21,16 +21,6 @@ class SecondaryProfileView extends ConsumerStatefulWidget {
 class _SecondaryProfileViewState extends ConsumerState<SecondaryProfileView> {
   MarketUser tempPryUser = MarketUser.empty();
 
-  @override
-  void initState() {
-    ref
-        .read(profileVmProvider.notifier)
-        .getUser(ref.read(authChangeProvider).value!.uid)
-        .then((value) => tempPryUser = value);
-
-    super.initState();
-  }
-
   void tempFollow() {
     if (tempPryUser.following.contains(widget.secondaryUser.uid)) {
       tempPryUser.following.remove(widget.secondaryUser.uid);
@@ -51,6 +41,7 @@ class _SecondaryProfileViewState extends ConsumerState<SecondaryProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    tempPryUser = ref.watch(profileVmProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MarketKonnetColor.primary[300],
@@ -82,7 +73,9 @@ class _SecondaryProfileViewState extends ConsumerState<SecondaryProfileView> {
                         user: widget.secondaryUser,
                         value: widget.secondaryUser.following.length,
                       ),
-                      ProfileAvatar(fullName: widget.secondaryUser.fullName),
+                      ProfileAvatar(
+                        user: widget.secondaryUser,
+                      ),
                       FollowDisplay(
                         label: "Followers",
                         user: widget.secondaryUser,

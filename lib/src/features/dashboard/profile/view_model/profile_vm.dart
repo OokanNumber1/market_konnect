@@ -4,9 +4,10 @@ import 'package:market_connect/src/features/authentication/repository/auth_repo.
 import 'package:market_connect/src/features/dashboard/profile/repository/profile_repo.dart';
 
 class ProfileNotifier extends StateNotifier<MarketUser> {
-  ProfileNotifier(
-      {required this.profileRepository, required this.authRepository})
-      : super(MarketUser.empty());
+  ProfileNotifier({
+    required this.profileRepository,
+    required this.authRepository,
+  }) : super(MarketUser.empty());
 
   final ProfileRepository profileRepository;
   final AuthRepository authRepository;
@@ -22,6 +23,10 @@ class ProfileNotifier extends StateNotifier<MarketUser> {
 
   Future<MarketUser> getProfile(String uid) async {
     return await profileRepository.getUser(uid);
+  }
+
+  void uploadProfileImage(String userId) async {
+    profileRepository.uploadProfileImage(userId);
   }
 }
 
