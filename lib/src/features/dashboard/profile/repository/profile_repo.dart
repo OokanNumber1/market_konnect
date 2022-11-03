@@ -24,12 +24,13 @@ class ProfileRepository {
     return MarketUser.fromMap(docMap!);
   }
 
-  void uploadProfileImage(String userId) async {
+  Future<void> uploadProfileImage(String userId) async {
     final imagePicker = ImagePicker();
     final pickedImage =
-        await imagePicker.pickImage(source: ImageSource.gallery);
+        await imagePicker.pickImage(source: ImageSource.gallery,imageQuality: 55);
     if (pickedImage != null) {
-      final imageRef = fStorage.ref().child("profileImages").child("$userId/DP_${DateTime.now().toIso8601String()}");
+      //final imageRef = fStorage.ref().child("profileImages").child("$userId/DP_${DateTime.now().toIso8601String()}");
+      final imageRef = fStorage.ref().child("profileImages").child(userId);
       await imageRef.putFile(File(pickedImage.path));
       final uploadLink = await imageRef.getDownloadURL();
       await firestore.collection(FirestoreCollection.marketUsers).doc(userId).update({"photoUrl": uploadLink});

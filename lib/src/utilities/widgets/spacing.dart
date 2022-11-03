@@ -7,6 +7,6 @@ class Spacing extends SizedBox {
 
   final double? height;
   final double? width;
-  factory Spacing.vertical({required double height}) => Spacing(height: height);
+  factory Spacing.vertical( double height) => Spacing(height: height);
   factory Spacing.horizontal(double width) => Spacing(height: width);
 }

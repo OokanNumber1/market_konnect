@@ -9,16 +9,17 @@ class MarketUserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(user.marketName),
-      subtitle: Text(user.email),
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SecondaryProfileView(
-            secondaryUser: user,
-          ),
-        ),
-      ),
-    );
+        title: Text(user.marketName),
+        subtitle: Text(user.email),
+        onTap: () {
+          FocusScope.of(context).unfocus();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SecondaryProfileView(
+                  secondaryUser: user,
+                ),
+              ));
+        });
   }
 }

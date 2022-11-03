@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:market_connect/src/features/authentication/model/market_user.dart';
@@ -6,13 +7,18 @@ import 'package:market_connect/src/utilities/insets/insets.dart';
 import 'package:market_connect/src/utilities/styles/theme.dart';
 import 'package:market_connect/src/utilities/widgets/spacing.dart';
 
-class ProfileAvatar extends ConsumerWidget {
+class ProfileAvatar extends ConsumerStatefulWidget {
   const ProfileAvatar({required this.user, super.key});
   final MarketUser user;
-  //TODO Add avatar here too
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProfileAvatar> createState() => _ProfileAvatarState();
+}
+
+class _ProfileAvatarState extends ConsumerState<ProfileAvatar> {
+  bool isLoading = false;
+  @override
+  Widget build(BuildContext context) {
     final profileVM = ref.watch(profileVmProvider);
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -21,22 +27,31 @@ class ProfileAvatar extends ConsumerWidget {
           clipBehavior: Clip.none,
           alignment: Alignment.bottomRight,
           children: [
-            CircleAvatar(
-              backgroundImage:
-                  user.photoUrl.isEmpty ? null : NetworkImage(user.photoUrl),
-              radius: 32,
-            ),
-            user == profileVM
+            isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : CircleAvatar(
+                    radius: 32,
+                    backgroundImage:
+                        CachedNetworkImageProvider(widget.user.photoUrl),
+                  ),
+            widget.user == profileVM
                 ? Positioned(
                     child: GestureDetector(
-                      onTap: () {
-                        ref
+                      onTap: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        await ref
                             .read(profileVmProvider.notifier)
                             .uploadProfileImage(profileVM.uid);
-                        ref.refresh(profileVmProvider);
+                        setState(() {
+                          isLoading = false;
+                        });
                       },
                       child: CircleAvatar(
-                        radius: 10,
+                        radius: 8,
                         backgroundColor: Colors.grey[50],
                         child: const Icon(
                           Icons.add,
@@ -49,9 +64,9 @@ class ProfileAvatar extends ConsumerWidget {
                 : const SizedBox()
           ],
         ),
-        Spacing.vertical(height: Insets.tiny),
+        Spacing.vertical(Insets.tiny),
         Text(
-          user.fullName,
+          widget.user.fullName,
           style: Theme.of(context).textTheme.bodyLarge,
         )
       ],

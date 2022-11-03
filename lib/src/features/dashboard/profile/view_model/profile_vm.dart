@@ -25,8 +25,8 @@ class ProfileNotifier extends StateNotifier<MarketUser> {
     return await profileRepository.getUser(uid);
   }
 
-  void uploadProfileImage(String userId) async {
-    profileRepository.uploadProfileImage(userId);
+ Future <void> uploadProfileImage(String userId) async {
+   await profileRepository.uploadProfileImage(userId);
   }
 }
 
