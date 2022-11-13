@@ -37,6 +37,13 @@ class _ProfileViewState extends ConsumerState<PrimaryProfileView> {
     ref
         .read(profileVmProvider.notifier)
         .getUser(ref.read(authChangeProvider).value!.uid);
+    // Future.delayed(Duration(seconds: 3),(){
+    //   ref.refresh(
+    //     profilePostsVmProvider(ref.read(authChangeProvider).value!.uid));
+    // ref.read(
+    //     profilePostsVmProvider(ref.read(authChangeProvider).value!.uid).future);
+    // });
+    //ref.read(profilePostsVmProvider(ref.read(authChangeProvider).value!.uid));
   }
 
   @override
@@ -103,40 +110,46 @@ class _ProfileViewState extends ConsumerState<PrimaryProfileView> {
               style: TextStyle(fontSize: 16),
             ),
             const Divider(thickness: 2),
-            profilePosts.when(
-              data: (posts) => posts.isEmpty
-                  ? const Center(
-                      child: Text("No Post Currently"),
-                    )
-                  : SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.672,
-                        children: List.generate(
-                          posts.length,
-                          (index) => GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    ProfilePostView(user: user),
+            RefreshIndicator(
+              onRefresh: () {
+                ref.refresh(profilePostsVmProvider(user.uid));
+                return ref.read(profilePostsVmProvider(user.uid).future);
+              },
+              child: profilePosts.when(
+                data: (posts) => posts.isEmpty
+                    ? const Center(
+                        child: Text("No Post Currently"),
+                      )
+                    : SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        child: GridView.count(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.672,
+                          children: List.generate(
+                            posts.length,
+                            (index) => GestureDetector(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProfilePostView(user: user),
+                                ),
                               ),
-                            ),
-                            child: ProfilePostCard(
-                              post: posts[index],
+                              child: ProfilePostCard(
+                                post: posts[index],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-              error: (error, stacktrace) => AsyncErrorWidget(
-                  ref: ref,
-                  onRefresh: () => ref.refresh(
-                        profilePostsVmProvider(user.uid),
-                      ),
-                  errorMessage: "Error Occured, Try Again"),
-              loading: () => const AsyncLoadingWidget(),
+                error: (error, stacktrace) => AsyncErrorWidget(
+                    ref: ref,
+                    onRefresh: () => ref.refresh(
+                          profilePostsVmProvider(user.uid),
+                        ),
+                    errorMessage: "Error Occured, Try Again"),
+                loading: () => const AsyncLoadingWidget(),
+              ),
             )
           ],
         ),
@@ -145,7 +158,7 @@ class _ProfileViewState extends ConsumerState<PrimaryProfileView> {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const AddMarketPost()),
-        ),
+        ).then((value) => ref.refresh(profilePostsVmProvider(user.uid))),
         child: const Icon(Icons.add),
       ),
     );

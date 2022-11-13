@@ -49,6 +49,7 @@ class SignInView extends HookConsumerWidget {
                 children: [
                   TextInputField(
                     controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     validator: (input) => Validator.characterLength(
                       input: input,
                       minimumLength: 11,
@@ -57,7 +58,7 @@ class SignInView extends HookConsumerWidget {
                     labelText: "Email",
                     prefixIcon: const Icon(Icons.email),
                   ),
-                  Spacing.vertical( 32),
+                  Spacing.vertical(32),
                   TextInputField(
                     controller: passwordController,
                     labelText: "Password",
@@ -73,7 +74,7 @@ class SignInView extends HookConsumerWidget {
                           : Icons.visibility_off),
                     ),
                   ),
-                  Spacing.vertical( 40),
+                  Spacing.vertical(40),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(double.maxFinite, 48),
@@ -94,7 +95,7 @@ class SignInView extends HookConsumerWidget {
                         ? const CircularProgressIndicator(color: Colors.white)
                         : const Text('SignIn With Email'),
                   ),
-                  Spacing.vertical( 24),
+                  Spacing.vertical(24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -110,7 +111,7 @@ class SignInView extends HookConsumerWidget {
                       )
                     ],
                   ),
-                  Spacing.vertical( 24),
+                  Spacing.vertical(24),
                   /*   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       fixedSize: const Size(double.maxFinite, 48),

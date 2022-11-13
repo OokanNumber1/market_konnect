@@ -60,7 +60,7 @@ class SignUpView extends HookConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacing.vertical( 48),
+                Spacing.vertical(48),
                 TextInputField(
                   controller: fullNameController,
                   validator: (input) => Validator.empty(input: input),
@@ -69,8 +69,9 @@ class SignUpView extends HookConsumerWidget {
                     Icons.details,
                   ),
                 ),
-                Spacing.vertical( 32),
+                Spacing.vertical(32),
                 TextInputField(
+                  keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   validator: (input) => Validator.characterLength(
                     input: input,
@@ -80,7 +81,7 @@ class SignUpView extends HookConsumerWidget {
                   labelText: "Email",
                   prefixIcon: const Icon(Icons.email),
                 ),
-                Spacing.vertical( 32),
+                Spacing.vertical(32),
                 TextInputField(
                   controller: marketNameController,
                   validator: (input) => Validator.characterLength(
@@ -93,7 +94,7 @@ class SignUpView extends HookConsumerWidget {
                     Icons.details,
                   ),
                 ),
-                Spacing.vertical( 32),
+                Spacing.vertical(32),
                 TextInputField(
                   controller: passwordController,
                   labelText: "Password",
@@ -110,7 +111,7 @@ class SignUpView extends HookConsumerWidget {
                     ),
                   ),
                 ),
-                Spacing.vertical( 32),
+                Spacing.vertical(32),
                 TextInputField(
                   controller: confirmPasswordController,
                   validator: (input) => Validator.confirmPassword(
@@ -128,7 +129,7 @@ class SignUpView extends HookConsumerWidget {
                         : Icons.visibility_off),
                   ),
                 ),
-                Spacing.vertical( 40),
+                Spacing.vertical(40),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(double.maxFinite, 48),
@@ -152,7 +153,7 @@ class SignUpView extends HookConsumerWidget {
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text('SignUp With Email'),
                 ),
-                Spacing.vertical( 24),
+                Spacing.vertical(24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -168,7 +169,7 @@ class SignUpView extends HookConsumerWidget {
                     )
                   ],
                 ),
-                Spacing.vertical( 24),
+                Spacing.vertical(24),
                 /*ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size(double.maxFinite, 48),

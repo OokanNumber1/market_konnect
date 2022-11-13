@@ -20,6 +20,7 @@ class _ProfileAvatarState extends ConsumerState<ProfileAvatar> {
   @override
   Widget build(BuildContext context) {
     final profileVM = ref.watch(profileVmProvider);
+    final user = widget.user == profileVM ? profileVM : widget.user;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -33,8 +34,15 @@ class _ProfileAvatarState extends ConsumerState<ProfileAvatar> {
                   )
                 : CircleAvatar(
                     radius: 32,
-                    backgroundImage:
-                        CachedNetworkImageProvider(widget.user.photoUrl),
+                    backgroundImage: user.photoUrl.isEmpty
+                        ? null
+                        : CachedNetworkImageProvider(user.photoUrl),
+                    child: user.photoUrl.isEmpty
+                        ? Text(
+                            user.fullName[0],
+                            style: const TextStyle(fontSize: 32),
+                          )
+                        : null,
                   ),
             widget.user == profileVM
                 ? Positioned(

@@ -20,26 +20,24 @@ class _ProfilePostViewState extends ConsumerState<ProfilePostView> {
     final userPostsVm = ref.watch(profilePostsVmProvider(widget.user.uid));
     return Scaffold(
       appBar: AppBar(
-        title: Text("${widget.user.marketName} Posts"),
+        title: Text("${widget.user.marketName}'s Posts"),
       ),
       backgroundColor: MarketKonnetColor.primary[100],
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: userPostsVm.when(
-          data: (posts) => ListView.builder(
-            physics: const BouncingScrollPhysics(),
-            itemCount: posts.length,
-            itemBuilder: (context, index) => MarketPostCard(author: widget.user,post: posts[index]),
-          ),
-          error: (error, stacktrace) => AsyncErrorWidget(
-            errorMessage: "Error Ocurred, Try Again",
-            ref: ref,
-            onRefresh: () => ref.refresh(
-              profilePostsVmProvider(widget.user.uid),
-            ),
-          ),
-          loading: () => const AsyncLoadingWidget(),
+      body: userPostsVm.when(
+        data: (posts) => ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: posts.length,
+          itemBuilder: (context, index) =>
+              MarketPostCard(author: widget.user, post: posts[index]),
         ),
+        error: (error, stacktrace) => AsyncErrorWidget(
+          errorMessage: "Error Ocurred, Try Again",
+          ref: ref,
+          onRefresh: () => ref.refresh(
+            profilePostsVmProvider(widget.user.uid),
+          ),
+        ),
+        loading: () => const AsyncLoadingWidget(),
       ),
     );
   }

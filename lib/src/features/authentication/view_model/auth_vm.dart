@@ -12,12 +12,11 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   //MarketUser? get currentUser => authRepository.currentUser;
   MarketUser? currentMarketUser;
-  
 
   void emailPasswordSignUp(SignupDTO signUpDto) async {
     state = state.copyWith(authViewState: ViewState.loading);
     try {
-      //final signedUser = 
+      //final signedUser =
      await authRepository.emailPasswordSignUp(signUpDto);
       state = state.copyWith(
         authViewState: ViewState.success,
@@ -42,7 +41,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
     }
   }
 
-  void googleSignIn() async {
+ /* void googleSignIn() async {
     state = state.copyWith(authViewState: ViewState.loading);
     try {
       //final user =
@@ -53,7 +52,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
     } on AuthException catch (e) {
       state = state.copyWith(errorMessage: e.errorMessage);
     }
-  }
+  }*/
 
   void signOut() async{
     state = state.copyWith(authViewState: ViewState.loading);

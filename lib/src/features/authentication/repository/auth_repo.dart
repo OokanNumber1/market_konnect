@@ -22,7 +22,7 @@ class AuthRepository {
 
   //MarketUser? get currentMarketUser => MarketUser.fromMap(firestore.collection(FirestoreCollection.marketUsers).get(""));
 
-  Future<void> googleSignIn() async {
+ /* Future<void> googleSignIn() async {
     final googleAccount = await googleAuth.signIn();
     if (googleAccount != null) {
       final googleSignInAuth = await googleAccount.authentication;
@@ -45,7 +45,7 @@ class AuthRepository {
       }
     }
     return ;
-  }
+  }*/
 
   //Future<MarketUser> emailPasswordSignIn(
   Future<void> emailPasswordSignIn(

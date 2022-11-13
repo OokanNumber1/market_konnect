@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:market_connect/src/features/dashboard/home/widgets/user_tile.dart';
 import 'package:market_connect/src/features/dashboard/profile/view_model/profile_vm.dart';
 import 'package:market_connect/src/features/dashboard/profile/view_model/search_vm.dart';
-import 'package:market_connect/src/features/market_posts/views/add_post.dart';
 
 import 'package:market_connect/src/utilities/insets/insets.dart';
 import 'package:market_connect/src/utilities/styles/theme.dart';
@@ -83,7 +82,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
           ),
         ),
       ),
-    
     );
   }
 }

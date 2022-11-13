@@ -8,11 +8,13 @@ class TextInputField extends StatelessWidget {
     required this.prefixIcon,
     this.suffixIcon,
     this.obscureText,
+    this.keyboardType,
     this.validator
   }) : super(key: key);
 
   final TextEditingController controller;
   final String labelText;
+  final TextInputType? keyboardType;
   final Icon prefixIcon;
   final Widget? suffixIcon;
   final bool? obscureText;
@@ -24,6 +26,7 @@ class TextInputField extends StatelessWidget {
       validator: validator,
       controller: controller,
       obscureText: obscureText ?? false,
+      keyboardType: keyboardType,
       obscuringCharacter: "*",
       textAlign: TextAlign.center,
       decoration: InputDecoration(

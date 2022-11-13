@@ -1,13 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:market_connect/src/features/authentication/model/market_user.dart';
-import 'package:market_connect/src/features/dashboard/profile/view/primary_profile_view.dart';
-import 'package:market_connect/src/features/dashboard/profile/view/secondary_profile_view.dart';
 import 'package:market_connect/src/features/market_posts/view_model/market_post_vm.dart';
-import 'package:market_connect/src/features/dashboard/profile/view_model/profile_vm.dart';
 import 'package:market_connect/src/features/market_posts/models/market_post.dart';
-import 'package:market_connect/src/utilities/styles/theme.dart';
 import 'package:market_connect/src/utilities/widgets/spacing.dart';
 
 class ProfilePostCard extends ConsumerStatefulWidget {
@@ -33,45 +28,10 @@ class _ProfilePostCardState extends ConsumerState<ProfilePostCard> {
 
   @override
   Widget build(BuildContext context) {
-    // ref
-    //     .read(marketPostVmProvider.notifier)
-    //     .getAuthor(widget.post.authorId)
-    //     .then((value) => author = value);
     final screenSize = MediaQuery.of(context).size;
 
     return Column(
       children: [
-        /*   Row(
-          children: [
-            CircleAvatar(
-              radius: 16,
-              child: author.photoUrl.isNotEmpty
-                  ? CachedNetworkImage(
-                      imageUrl: author.photoUrl,
-                      fit: BoxFit.contain,
-                    )
-                  : Text(widget.post.authorId[0]),
-            ),
-            Spacing.horizontal(8),
-            InkWell(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => author == primaryUser
-                      ? const PrimaryProfileView()
-                      : SecondaryProfileView(secondaryUser: author),
-                ),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(widget.post.authorId),
-                  Text(widget.post.createdAt.toIso8601String()),
-                ],
-              ),
-            )
-          ],
-        ),*/
         Spacing.vertical(12),
         Container(
           height: screenSize.height * 0.32,

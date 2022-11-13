@@ -12,11 +12,11 @@ class MarketPostNotifier extends StateNotifier<AsyncValue<void>> {
   final ProfileRepository profileRepo;
   final PostRepository postRepo;
 
-  void uploadPost(
+  Future<void> uploadPost(
       {required String userId,
       required MarketPost post,
       required File? postImage}) async {
-    postRepo.uploadPost(post: post, postImage: postImage);
+   await postRepo.uploadPost(post: post, postImage: postImage);
   }
 
   Future<File?> pickImage() async {

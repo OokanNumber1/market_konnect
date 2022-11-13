@@ -27,7 +27,7 @@ class PostRepository {
     return null;
   }
 
-  void uploadPost({
+  Future<void> uploadPost({
     required MarketPost post,
     required File? postImage,
   }) async {
