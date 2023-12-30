@@ -10,7 +10,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
   AuthViewModel({required this.authRepository}) : super(const AuthState());
   final AuthRepository authRepository;
 
-  //MarketUser? get currentUser => authRepository.currentUser;
+  // MarketUser? get currentUser => authRepository.currentUser;
   MarketUser? currentMarketUser;
 
   void emailPasswordSignUp(SignupDTO signUpDto) async {

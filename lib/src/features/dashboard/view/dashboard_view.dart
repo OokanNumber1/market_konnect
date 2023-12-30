@@ -14,6 +14,9 @@ class DashboardView extends ConsumerStatefulWidget {
   ConsumerState<DashboardView> createState() => _DashboardViewState();
 }
 
+typedef PageType<T> = Function(
+    {required String label, required Widget screen, required IconData icon});
+
 class _DashboardViewState extends ConsumerState<DashboardView> {
   int indexOfNavBar = 0;
 
@@ -24,7 +27,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
         .getUser(ref.read(authChangeProvider).value!.uid);
     super.initState();
   }
-  
+
   void setIndexOfNavbar(int value) => setState(() {
         indexOfNavBar = value;
       });

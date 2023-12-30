@@ -34,7 +34,7 @@ class _ProfilePostCardState extends ConsumerState<ProfilePostCard> {
       children: [
         Spacing.vertical(12),
         Container(
-          height: screenSize.height * 0.32,
+          height: screenSize.height * 0.3,
           width: screenSize.width * 0.48,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),

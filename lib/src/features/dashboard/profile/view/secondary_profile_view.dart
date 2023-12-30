@@ -6,6 +6,7 @@ import 'package:market_connect/src/features/dashboard/profile/view/profile_post_
 import 'package:market_connect/src/features/dashboard/profile/view_model/profile_vm.dart';
 import 'package:market_connect/src/features/dashboard/profile/widgets/follow_display.dart';
 import 'package:market_connect/src/features/dashboard/profile/widgets/profile_avatar_card.dart';
+import 'package:market_connect/src/features/dashboard/reach_out/view/reach_out_to_user.dart';
 import 'package:market_connect/src/utilities/insets/insets.dart';
 import 'package:market_connect/src/utilities/styles/theme.dart';
 import 'package:market_connect/src/utilities/widgets/spacing.dart';
@@ -82,9 +83,9 @@ class _SecondaryProfileViewState extends ConsumerState<SecondaryProfileView> {
                             user: widget.secondaryUser,
                             value: widget.secondaryUser.following.length,
                           ),
-                          ProfileAvatar(
-                            user: widget.secondaryUser,
-                          ),
+                          // ProfileAvatar(
+                          //   user: widget.secondaryUser,
+                          // ),
                           FollowDisplay(
                             label: "Followers",
                             user: widget.secondaryUser,
@@ -112,7 +113,17 @@ class _SecondaryProfileViewState extends ConsumerState<SecondaryProfileView> {
                                     : "Follow"),
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) {
+                                    return ReachOutToUser(
+                                        secondaryUser: widget.secondaryUser);
+                                  }),
+                                ),
+                              );
+                            },
                             child: const Text("Reach Out"),
                           ),
                         ],
